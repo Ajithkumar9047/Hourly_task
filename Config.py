@@ -9,7 +9,7 @@ import tempfile
 import logging
 
 logging.basicConfig(
-    filename='lmsapp.log',
+    filename='app.log',
     level=logging.DEBUG,
     format='%(asctime)s [%(levelname)s]: %(message)s',
 )
