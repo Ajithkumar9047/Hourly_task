@@ -13,7 +13,7 @@ current_time = current_datetime.strftime('%H:%M')
 yesterday_date = (current_datetime - timedelta(days=1)).strftime('%Y-%m-%d')
 
 # Define SQL queries based on time range
-if current_time <= '10:00':
+if '13:59'>current_time >= '10:00':
     query1 = f'''SELECT * FROM (
                 SELECT create_date
                 FROM tb_tvs_common_api_leads 
@@ -80,7 +80,7 @@ if current_time <= '10:00':
                 '''
     t1 = f'{yesterday_date} 06:00 PM'
     t2 = f'{current_date} 10:00 AM'
-elif '10:00' < current_time <= '14:00':
+elif '14:00' < current_time <= '18:00':
     query1 = f'''SELECT * FROM (SELECT create_date FROM tb_tvs_common_api_leads WHERE model_id IN (19) 
                 AND create_date BETWEEN '{current_date} 10:00:00.000' AND '{current_date} 14:00:00.000'
                 UNION ALL
@@ -143,7 +143,7 @@ elif '10:00' < current_time <= '14:00':
                     ) AS combined_data;
                 '''
     t1, t2 = f'{current_date} 10:00 AM', f'{current_date} 02:00 PM'
-elif '14:00' < current_time <= '18:00':
+elif '18:00' < current_time <= '10:00':
     query1 = f'''SELECT * FROM (
                 SELECT create_date
                 FROM tb_tvs_common_api_leads 
@@ -213,6 +213,7 @@ elif '14:00' < current_time <= '18:00':
                     ) AS combined_data;
                 '''
     t1, t2 = f'{current_date} 02:00 PM', f'{current_date} 06:00PM'
+    print(f"time rage:{t1} to {t2}")
 else:
     print("Invalid time range")
     logging.error("Invalid time range")
@@ -247,6 +248,7 @@ try:
     df1 = pd.DataFrame(data2)
 
     # Send the email
+    print(f"time rage:{t1} to {t2}")
     email_generator(df, df1, t1, t2)
 except Exception as e:
     print(f"An error occurred: {e}")
