@@ -80,7 +80,7 @@ if current_time <= '10:00':
                 '''
     t1 = f'{yesterday_date} 06:00 PM'
     t2 = f'{current_date} 10:00 AM'
-elif '10:00' < current_time <= '14:00':
+elif '14:00' <= current_time <= '18:00':
     query1 = f'''SELECT * FROM (SELECT create_date FROM tb_tvs_common_api_leads WHERE model_id IN (19) 
                 AND create_date BETWEEN '{current_date} 10:00:00.000' AND '{current_date} 14:00:00.000'
                 UNION ALL
@@ -143,7 +143,7 @@ elif '10:00' < current_time <= '14:00':
                     ) AS combined_data;
                 '''
     t1, t2 = f'{current_date} 10:00 AM', f'{current_date} 02:00 PM'
-elif '14:00' < current_time <= '18:00':
+elif '18:00' < current_time > '9:59' :
     query1 = f'''SELECT * FROM (
                 SELECT create_date
                 FROM tb_tvs_common_api_leads 
@@ -251,4 +251,4 @@ try:
 except Exception as e:
     print(f"An error occurred: {e}")
     logging.error(f"An error occurred: {e}")
-    Failed_mail(t1,t2,e)
+    Failed_mail(yesterday_date,current_date,e)
